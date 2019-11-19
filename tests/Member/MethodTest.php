@@ -5,7 +5,7 @@ namespace Test\Leaditin\Code\Member;
 use InvalidArgumentException;
 use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
-use Leaditin\Code\Member\Argument;
+use Leaditin\Code\Argument;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Type;
 use Leaditin\Code\Visibility;

@@ -4,7 +4,7 @@ namespace Test\Leaditin\Code\Generator;
 
 use Leaditin\Code\Generator\ArgumentGenerator;
 use Leaditin\Code\Generator\Factory;
-use Leaditin\Code\Member\Argument;
+use Leaditin\Code\Argument;
 use Leaditin\Code\Type;
 use Leaditin\Code\Value;
 use PHPUnit\Framework\TestCase;

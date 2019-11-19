@@ -3,6 +3,7 @@
 namespace Leaditin\Code\Member;
 
 use InvalidArgumentException;
+use Leaditin\Code\Argument;
 use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
 use Leaditin\Code\Type;

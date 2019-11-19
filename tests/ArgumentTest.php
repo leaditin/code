@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Leaditin\Code\Member;
+namespace Test\Leaditin\Code;
 
-use Leaditin\Code\Member\Argument;
+use Leaditin\Code\Argument;
 use Leaditin\Code\Type;
 use Leaditin\Code\Value;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * @package Test\Leaditin\Code
  * @author Igor Vuckovic <igor@vuckovic.biz>
  *
- * @covers \Leaditin\Code\Member\Argument
+ * @covers \Leaditin\Code\Argument
  */
 final class ArgumentTest extends TestCase
 {

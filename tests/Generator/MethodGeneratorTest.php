@@ -7,7 +7,7 @@ use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
 use Leaditin\Code\Generator\Factory;
 use Leaditin\Code\Generator\MethodGenerator;
-use Leaditin\Code\Member\Argument;
+use Leaditin\Code\Argument;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Tag;
 use Leaditin\Code\Type;

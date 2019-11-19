@@ -2,7 +2,7 @@
 
 namespace Leaditin\Code\Generator;
 
-use Leaditin\Code\Member\Argument;
+use Leaditin\Code\Argument;
 
 /**
  * @package Leaditin\Code

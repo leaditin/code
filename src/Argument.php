@@ -1,9 +1,6 @@
 <?php
 
-namespace Leaditin\Code\Member;
-
-use Leaditin\Code\Type;
-use Leaditin\Code\Value;
+namespace Leaditin\Code;
 
 /**
  * @package Leaditin\Code
