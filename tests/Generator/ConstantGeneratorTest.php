@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @author Igor Vuckovic <igor@vuckovic.biz>
  *
  * @covers \Leaditin\Code\Generator\ConstantGenerator
+ * @covers \Leaditin\Code\Generator\MemberGenerator
  */
 final class ConstantGeneratorTest extends TestCase
 {

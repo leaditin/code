@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @package Test\Leaditin\Code
  * @author Igor Vuckovic <igor@vuckovic.biz>
  *
+ * @covers \Leaditin\Code\Generator\MemberGenerator
  * @covers \Leaditin\Code\Generator\PropertyGenerator
  */
 final class PropertyGeneratorTest extends TestCase

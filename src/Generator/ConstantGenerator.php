@@ -10,7 +10,7 @@ use Leaditin\Code\Value;
  * @author Igor Vuckovic <igor@vuckovic.biz>
  * @license MIT
  */
-class ConstantGenerator extends Generator
+class ConstantGenerator extends MemberGenerator
 {
     /**
      * @var ValueGenerator
@@ -23,15 +23,20 @@ class ConstantGenerator extends Generator
     protected $visibilityGenerator;
 
     /**
+     * @param DocBlockGenerator $docBlockGenerator
+     * @param TypeGenerator $typeGenerator
      * @param ValueGenerator $valueGenerator
      * @param VisibilityGenerator $visibilityGenerator
      */
-    public function __construct(ValueGenerator $valueGenerator, VisibilityGenerator $visibilityGenerator)
-    {
-        $this->valueGenerator = $valueGenerator;
-        $this->visibilityGenerator = $visibilityGenerator;
+    public function __construct(
+        DocBlockGenerator $docBlockGenerator,
+        TypeGenerator $typeGenerator,
+        ValueGenerator $valueGenerator,
+        VisibilityGenerator $visibilityGenerator
+    ) {
+        parent::__construct($docBlockGenerator, $typeGenerator, $visibilityGenerator);
 
-        $this->setDepth(1);
+        $this->valueGenerator = $valueGenerator;
     }
 
     /**

@@ -11,27 +11,12 @@ use Leaditin\Code\Tag;
  * @author Igor Vuckovic <igor@vuckovic.biz>
  * @license MIT
  */
-class PropertyGenerator extends Generator
+class PropertyGenerator extends MemberGenerator
 {
-    /**
-     * @var DocBlockGenerator
-     */
-    protected $docBlockGenerator;
-
-    /**
-     * @var TypeGenerator
-     */
-    protected $typeGenerator;
-
     /**
      * @var ValueGenerator
      */
     protected $valueGenerator;
-
-    /**
-     * @var VisibilityGenerator
-     */
-    protected $visibilityGenerator;
 
     /**
      * @param DocBlockGenerator $docBlockGenerator
@@ -45,13 +30,9 @@ class PropertyGenerator extends Generator
         ValueGenerator $valueGenerator,
         VisibilityGenerator $visibilityGenerator
     ) {
-        $this->docBlockGenerator = $docBlockGenerator;
-        $this->typeGenerator = $typeGenerator;
-        $this->valueGenerator = $valueGenerator;
-        $this->visibilityGenerator = $visibilityGenerator;
+        parent::__construct($docBlockGenerator, $typeGenerator, $visibilityGenerator);
 
-        $this->setDepth(1);
-        $this->docBlockGenerator->setDepth(1);
+        $this->valueGenerator = $valueGenerator;
     }
 
     /**

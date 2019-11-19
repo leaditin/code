@@ -26,6 +26,8 @@ class Factory
     public function constantGenerator(): ConstantGenerator
     {
         return new ConstantGenerator(
+            $this->docBlockGenerator(),
+            $this->typeGenerator(),
             $this->valueGenerator(),
             $this->visibilityGenerator()
         );
