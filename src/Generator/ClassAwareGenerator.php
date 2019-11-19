@@ -174,6 +174,32 @@ abstract class ClassAwareGenerator extends Generator
     /**
      * @return string
      */
+    protected function generateHead(): string
+    {
+        $output = $this->generateLine('<?php', null, 1);
+
+        if ($this->namespace !== null) {
+            $output .= $this->generateLine('namespace ' . ltrim($this->namespace, '\\') . ';', null, 1);
+        }
+
+        if ($this->docBlock !== null) {
+            $output .= $this->generateLine($this->docBlockGenerator->generate($this->docBlock));
+        }
+
+        return $output;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateFoot(): string
+    {
+        return $this->generateLine('}');
+    }
+
+    /**
+     * @return string
+     */
     protected function generateConstants(): string
     {
         $lines = [];

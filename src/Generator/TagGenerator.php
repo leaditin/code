@@ -12,7 +12,9 @@ use Leaditin\Code\Tag;
 class TagGenerator extends Generator
 {
     /**
-     * @inheritDoc
+     * @param Tag $tag
+     *
+     * @return string
      */
     public function generate(Tag $tag): string
     {
