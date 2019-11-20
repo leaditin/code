@@ -3,6 +3,7 @@
 namespace Test\Leaditin\Code\Generator;
 
 use Leaditin\Code\Generator\ArgumentGenerator;
+use Leaditin\Code\Generator\ClassGenerator;
 use Leaditin\Code\Generator\ConstantGenerator;
 use Leaditin\Code\Generator\DocBlockGenerator;
 use Leaditin\Code\Generator\Factory;
@@ -42,6 +43,10 @@ final class FactoryTest extends TestCase
             [
                 'methodName' => 'argumentGenerator',
                 'expected' => ArgumentGenerator::class,
+            ],
+            [
+                'methodName' => 'classGenerator',
+                'expected' => ClassGenerator::class,
             ],
             [
                 'methodName' => 'constantGenerator',

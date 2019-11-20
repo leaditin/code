@@ -175,6 +175,18 @@ abstract class ClassAwareGenerator extends Generator
     /**
      * @return string
      */
+    public function generate(): string
+    {
+        return $this->generateHead()
+            . $this->generateConstants()
+            . $this->generateProperties()
+            . $this->generateMethods()
+            . $this->generateFoot();
+    }
+
+    /**
+     * @return string
+     */
     abstract protected function getScope(): string;
 
     /**
@@ -191,6 +203,9 @@ abstract class ClassAwareGenerator extends Generator
         if ($this->docBlock !== null) {
             $output .= $this->generateLine($this->docBlockGenerator->generate($this->docBlock));
         }
+
+        $output .= $this->generateLine($this->getScope() . ' ' . $this->name . ($this->extends !== null ? ' extends \\' . ltrim($this->extends, '\\') : ''));
+        $output .= $this->generateLine('{');
 
         return $output;
     }

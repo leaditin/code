@@ -7,21 +7,13 @@ namespace Leaditin\Code\Generator;
  * @author Igor Vuckovic <igor@vuckovic.biz>
  * @license MIT
  */
-class InterfaceGenerator extends ClassAwareGenerator
+class ClassGenerator extends ClassAwareGenerator
 {
     /**
      * @inheritDoc
      */
     protected function getScope(): string
     {
-        return 'interface';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function generateProperties(): string
-    {
-        return '';
+        return 'class';
     }
 }

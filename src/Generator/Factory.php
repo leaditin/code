@@ -21,6 +21,19 @@ class Factory
     }
 
     /**
+     * @return ClassGenerator
+     */
+    public function classGenerator(): ClassGenerator
+    {
+        return new ClassGenerator(
+            $this->constantGenerator(),
+            $this->docBlockGenerator(),
+            $this->methodGenerator(),
+            $this->propertyGenerator()
+        );
+    }
+
+    /**
      * @return ConstantGenerator
      */
     public function constantGenerator(): ConstantGenerator
@@ -40,6 +53,19 @@ class Factory
     {
         return new DocBlockGenerator(
             $this->tagGenerator()
+        );
+    }
+
+    /**
+     * @return InterfaceGenerator
+     */
+    public function interfaceGenerator(): InterfaceGenerator
+    {
+        return new InterfaceGenerator(
+            $this->constantGenerator(),
+            $this->docBlockGenerator(),
+            $this->methodGenerator(),
+            $this->propertyGenerator()
         );
     }
 
@@ -83,19 +109,6 @@ class Factory
     public function traitGenerator(): TraitGenerator
     {
         return new TraitGenerator(
-            $this->constantGenerator(),
-            $this->docBlockGenerator(),
-            $this->methodGenerator(),
-            $this->propertyGenerator()
-        );
-    }
-
-    /**
-     * @return InterfaceGenerator
-     */
-    public function interfaceGenerator(): InterfaceGenerator
-    {
-        return new InterfaceGenerator(
             $this->constantGenerator(),
             $this->docBlockGenerator(),
             $this->methodGenerator(),
