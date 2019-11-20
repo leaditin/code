@@ -38,7 +38,7 @@ class ArgumentGenerator extends Generator
      */
     public function generate(Argument $argument): string
     {
-        $output = $this->typeGenerator->generate($argument->type()) . ' ';
+        $output = preg_replace('/\?(\w+)/', '$1', $this->typeGenerator->generate($argument->type())) . ' ';
 
         if ($argument->isReference() && $argument->type()->isScalar()) {
             $output .= ' &';

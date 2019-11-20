@@ -2,6 +2,7 @@
 
 namespace Leaditin\Code\Generator;
 
+use Leaditin\Code\Argument;
 use Leaditin\Code\DocBlock;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Tag;
@@ -116,10 +117,8 @@ class MethodGenerator extends MemberGenerator
         }
 
         foreach ($method->arguments() as $argument) {
-            $comment = '@property ' . $this->argumentGenerator->generate($argument);
-
-            if (strpos($docblock, $comment) === false) {
-                $tags[] = new Tag('property', $this->argumentGenerator->generate($argument));
+            if ($tag = $this->generateTagFromArgument($argument, $docblock)) {
+                $tags[] = $tag;
             }
         }
 
@@ -128,5 +127,25 @@ class MethodGenerator extends MemberGenerator
         }
 
         return new DocBlock($shortDescription, $longDescription, $tags);
+    }
+
+    /**
+     * @param Argument $argument
+     * @param string $docBlock
+     *
+     * @return null|Tag
+     */
+    protected function generateTagFromArgument(Argument $argument, string $docBlock): ?Tag
+    {
+        $pattern = '/@property.+\$' . $argument->name() . '/';
+
+        if (preg_match($pattern, $docBlock)) {
+            return null;
+        }
+
+        $value = preg_replace('/\?(\w+)/', 'null|$1', $this->typeGenerator->generate($argument->type()));
+        $value .= ' $' . $argument->name();
+
+        return new Tag('property', $value);
     }
 }

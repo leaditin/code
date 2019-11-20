@@ -42,22 +42,30 @@ final class MethodGeneratorTest extends TestCase
             new Flag(Flag::FLAG_FINAL),
             [
                 new Argument('name', new Type(Type::TYPE_STRING), new Value()),
-                new Argument('email', new Type(Type::TYPE_STRING), new Value()),
+                new Argument('email', new Type(Type::TYPE_STRING, true), new Value()),
             ],
             'return "@author $name <@email>";',
-            null,
+            new DocBlock(
+                'Some example',
+                null,
+                [
+                    new Tag('property', 'string $name Defines name')
+                ]
+            ),
             new Type(Type::TYPE_STRING)
         );
 
         $expected = <<<EOL
     /**
-     * @property string \$name
+     * Some example
      *
-     * @property string \$email
+     * @property string \$name Defines name
+     *
+     * @property null|string \$email
      *
      * @return string
      */
-    final public function doSomething(string \$name, string \$email): string
+    final public function doSomething(string \$name, string \$email = null): string
     {
         return "@author \$name <@email>";
     }
