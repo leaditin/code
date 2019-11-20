@@ -72,7 +72,7 @@ class MethodGenerator extends MemberGenerator
             $line .= ': ' . $this->typeGenerator->generate($method->returnType());
         }
 
-        if ($method->isAbstract()) {
+        if ($method->isAbstract() || $method->scope() === Method::SCOPE_INTERFACE) {
             $output .= $this->generateLine($line . ';');
 
             return rtrim($output, $this->endOfLine);
@@ -117,7 +117,7 @@ class MethodGenerator extends MemberGenerator
         }
 
         foreach ($method->arguments() as $argument) {
-            if ($tag = $this->generateTagFromArgument($argument, $docblock)) {
+            if (($tag = $this->generateTagFromArgument($argument, $docblock)) !== null) {
                 $tags[] = $tag;
             }
         }

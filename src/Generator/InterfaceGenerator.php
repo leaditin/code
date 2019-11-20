@@ -7,7 +7,7 @@ namespace Leaditin\Code\Generator;
  * @author Igor Vuckovic <igor@vuckovic.biz>
  * @license MIT
  */
-class TraitGenerator extends ClassAwareGenerator
+class InterfaceGenerator extends ClassAwareGenerator
 {
     /**
      * @return string
@@ -16,11 +16,10 @@ class TraitGenerator extends ClassAwareGenerator
     {
         $output = $this->generateHead();
 
-        $output .= $this->generateLine('trait ' . $this->name . ($this->extends !== null ? ' extends \\' . ltrim($this->extends, '\\') : ''));
+        $output .= $this->generateLine('interface ' . $this->name . ($this->extends !== null ? ' extends \\' . ltrim($this->extends, '\\') : ''));
         $output .= $this->generateLine('{');
 
         $output .= $this->generateConstants();
-        $output .= $this->generateProperties();
         $output .= $this->generateMethods();
 
         $output .= $this->generateFoot();
@@ -33,6 +32,6 @@ class TraitGenerator extends ClassAwareGenerator
      */
     protected function getScope(): string
     {
-        return 'trait';
+        return 'interface';
     }
 }

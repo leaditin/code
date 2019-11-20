@@ -91,6 +91,19 @@ class Factory
     }
 
     /**
+     * @return InterfaceGenerator
+     */
+    public function interfaceGenerator(): InterfaceGenerator
+    {
+        return new InterfaceGenerator(
+            $this->constantGenerator(),
+            $this->docBlockGenerator(),
+            $this->methodGenerator(),
+            $this->propertyGenerator()
+        );
+    }
+
+    /**
      * @return TypeGenerator
      */
     public function typeGenerator(): TypeGenerator

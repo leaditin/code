@@ -166,10 +166,16 @@ abstract class ClassAwareGenerator extends Generator
      */
     public function addMethod(Method $method): self
     {
+        $method->setScope($this->getScope());
         $this->methods[$method->name()] = $method;
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getScope(): string;
 
     /**
      * @return string
@@ -239,7 +245,7 @@ abstract class ClassAwareGenerator extends Generator
     {
         $output = '';
 
-        if ($this->properties !== [] && $this->methods !== []) {
+        if ($this->methods !== [] && ($this->constants !== [] || $this->properties !== [])) {
             $output .= $this->generateLine('', 0);
         }
 

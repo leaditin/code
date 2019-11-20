@@ -16,6 +16,10 @@ use Leaditin\Code\Visibility;
  */
 class Method
 {
+    public const SCOPE_CLASS = 'class';
+    public const SCOPE_INTERFACE = 'interface';
+    public const SCOPE_TRAIT = 'trait';
+
     /**
      * @var string
      */
@@ -45,6 +49,11 @@ class Method
      * @var null|Type
      */
     protected $returnType;
+
+    /**
+     * @var string
+     */
+    protected $scope;
 
     /**
      *
@@ -157,6 +166,22 @@ class Method
     public function isStatic(): bool
     {
         return $this->flag->hasFlag(Flag::FLAG_STATIC);
+    }
+
+    /**
+     * @param string $scope
+     */
+    public function setScope(string $scope): void
+    {
+        $this->scope = $scope;
+    }
+
+    /**
+     * @return string
+     */
+    public function scope(): string
+    {
+        return $this->scope ?? static::SCOPE_CLASS;
     }
 
     /**

@@ -6,6 +6,7 @@ use Leaditin\Code\Generator\ArgumentGenerator;
 use Leaditin\Code\Generator\ConstantGenerator;
 use Leaditin\Code\Generator\DocBlockGenerator;
 use Leaditin\Code\Generator\Factory;
+use Leaditin\Code\Generator\InterfaceGenerator;
 use Leaditin\Code\Generator\MethodGenerator;
 use Leaditin\Code\Generator\PropertyGenerator;
 use Leaditin\Code\Generator\TagGenerator;
@@ -49,6 +50,9 @@ final class FactoryTest extends TestCase
             [
                 'methodName' => 'docBlockGenerator',
                 'expected' => DocBlockGenerator::class,
+            ],[
+                'methodName' => 'interfaceGenerator',
+                'expected' => InterfaceGenerator::class,
             ],
             [
                 'methodName' => 'methodGenerator',

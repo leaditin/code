@@ -149,4 +149,26 @@ final class MethodTest extends TestCase
 
         new Method($this->anything()->toString(), null, [$this->anything()->toString()]);
     }
+
+    public function scopeDataProvider(): array
+    {
+        return [
+            [Method::SCOPE_CLASS],
+            [Method::SCOPE_INTERFACE],
+            [Method::SCOPE_TRAIT],
+        ];
+    }
+
+    /**
+     * @dataProvider scopeDataProvider
+     * 
+     * @param string $scope
+     */
+    public function testScope(string $scope): void
+    {
+        $method = new Method($this->anything()->toString());
+        $method->setScope($scope);
+
+        $this->assertSame($scope, $method->scope());
+    }
 }
