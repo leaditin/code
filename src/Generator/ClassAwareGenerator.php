@@ -166,7 +166,7 @@ abstract class ClassAwareGenerator extends Generator
      */
     public function addMethod(Method $method): self
     {
-        $method->setScope($this->getScope());
+        $method->setScope($this->scope());
         $this->methods[$method->name()] = $method;
 
         return $this;
@@ -187,7 +187,12 @@ abstract class ClassAwareGenerator extends Generator
     /**
      * @return string
      */
-    abstract protected function getScope(): string;
+    abstract protected function scope(): string;
+
+    /**
+     * @return string
+     */
+    abstract protected function generateScope(): string;
 
     /**
      * @return string
@@ -195,19 +200,47 @@ abstract class ClassAwareGenerator extends Generator
     protected function generateHead(): string
     {
         $output = $this->generateLine('<?php', null, 1);
-
-        if ($this->namespace !== null) {
-            $output .= $this->generateLine('namespace ' . ltrim($this->namespace, '\\') . ';', null, 1);
-        }
-
-        if ($this->docBlock !== null) {
-            $output .= $this->generateLine($this->docBlockGenerator->generate($this->docBlock));
-        }
-
-        $output .= $this->generateLine($this->getScope() . ' ' . $this->name . ($this->extends !== null ? ' extends \\' . ltrim($this->extends, '\\') : ''));
-        $output .= $this->generateLine('{');
+        $output .= $this->generateNamespace();
+        $output .= $this->generateDocBlock();
+        $output .= $this->generateScope();
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateNamespace(): string
+    {
+        if ($this->namespace === null) {
+            return '';
+        }
+
+        return $this->generateLine('namespace ' . ltrim($this->namespace, '\\') . ';', null, 1);
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateDocBlock(): string
+    {
+        if ($this->docBlock === null) {
+            return '';
+        }
+
+        return $this->generateLine($this->docBlockGenerator->generate($this->docBlock));
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateInheritance(): string
+    {
+        if ($this->extends === null) {
+            return '';
+        }
+
+        return ' extends \\' . ltrim($this->extends, '\\');
     }
 
     /**

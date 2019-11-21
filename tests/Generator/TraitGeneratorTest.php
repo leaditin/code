@@ -56,7 +56,7 @@ final class TraitGeneratorTest extends TestCase
         $expected = <<<EOL
 <?php
 
-namespace My\\Dummy\\Namespace;
+namespace My\Dummy\Namespace;
 
 /**
  * Short description
@@ -65,7 +65,7 @@ namespace My\\Dummy\\Namespace;
  *
  * @property int \$someInteger
  */
-trait MyTrait extends \\My\\Dummy\\Trait
+trait MyTrait extends \My\Dummy\Trait
 {
 }
 

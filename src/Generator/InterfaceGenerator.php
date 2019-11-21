@@ -12,9 +12,17 @@ class InterfaceGenerator extends ClassAwareGenerator
     /**
      * @inheritDoc
      */
-    protected function getScope(): string
+    protected function scope(): string
     {
         return 'interface';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function generateScope(): string
+    {
+        return $this->generateLine('interface ' . $this->name . $this->generateInheritance()). $this->generateLine('{');
     }
 
     /**

@@ -56,7 +56,7 @@ final class ClassGeneratorTest extends TestCase
         $expected = <<<EOL
 <?php
 
-namespace My\\Dummy\\Namespace;
+namespace My\Dummy\Namespace;
 
 /**
  * Short description
@@ -65,7 +65,7 @@ namespace My\\Dummy\\Namespace;
  *
  * @property int \$someInteger
  */
-class MyClass extends \\My\\Dummy\\Class
+class MyClass extends \My\Dummy\Class
 {
 }
 
@@ -160,6 +160,10 @@ EOL;
     {
         $this->generator
             ->setName('MyClass')
+            ->setNamespace('My\Dummy\Namespace')
+            ->setExtends('My\Dummy\Class')
+            ->implementInterface('My\Dummy\Interface')
+            ->useTrait('My\Dummy\Trait')
             ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addProperty(new Property('name', new Value('Jon'), new Type(Type::TYPE_STRING), new Flag(Flag::FLAG_PROTECTED)))
@@ -170,8 +174,12 @@ EOL;
         $expected = <<<EOL
 <?php
 
-class MyClass
+namespace My\Dummy\Namespace;
+
+class MyClass extends \My\Dummy\Class implements \My\Dummy\Interface
 {
+    use \My\Dummy\Trait;
+
     public const CONST_A = 2;
     public const CONST_B = 3;
 
@@ -200,6 +208,53 @@ class MyClass
     {
         return \$this->email;
     }
+}
+
+EOL;
+        $this->assertSame($expected, $this->generator->generate());
+    }
+
+    public function testGenerateFinal(): void
+    {
+        $this->generator
+            ->setName('MyClass')
+            ->setNamespace('My\Dummy\Namespace')
+            ->setExtends('My\Dummy\Class')
+            ->setFinal(true);
+
+        $expected = <<<EOL
+<?php
+
+namespace My\Dummy\Namespace;
+
+final class MyClass extends \My\Dummy\Class
+{
+}
+
+EOL;
+        $this->assertSame($expected, $this->generator->generate());
+    }
+
+    public function testGenerateAbstract(): void
+    {
+        $this->generator
+            ->setName('MyClass')
+            ->setNamespace('My\Dummy\Namespace')
+            ->setExtends('My\Dummy\Class')
+            ->setAbstract(true)
+            ->addMethod(new Method('email', new Flag(Flag::FLAG_ABSTRACT), null, null, null, new Type(Type::TYPE_STRING)));
+
+        $expected = <<<EOL
+<?php
+
+namespace My\Dummy\Namespace;
+
+abstract class MyClass extends \My\Dummy\Class
+{
+    /**
+     * @return string
+     */
+    abstract public function email(): string;
 }
 
 EOL;

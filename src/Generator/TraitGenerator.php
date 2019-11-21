@@ -12,8 +12,16 @@ class TraitGenerator extends ClassAwareGenerator
     /**
      * @inheritDoc
      */
-    protected function getScope(): string
+    protected function scope(): string
     {
         return 'trait';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function generateScope(): string
+    {
+        return $this->generateLine('trait ' . $this->name . $this->generateInheritance()) . $this->generateLine('{');
     }
 }

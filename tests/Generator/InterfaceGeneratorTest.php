@@ -63,7 +63,7 @@ namespace My\\Dummy\\Namespace;
  *
  * @author Code Generator
  */
-interface MyInterface extends \\My\\Dummy\\Interface
+interface MyInterface extends \My\Dummy\Interface
 {
 }
 
@@ -124,6 +124,8 @@ EOL;
     {
         $this->generator
             ->setName('MyInterface')
+            ->setNamespace('My\Dummy\Namespace')
+            ->setExtends('My\Dummy\Interface')
             ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addMethod(new Method('name', new Flag(Flag::FLAG_PROTECTED), null, null, null, new Type(Type::TYPE_STRING)))
@@ -132,7 +134,9 @@ EOL;
         $expected = <<<EOL
 <?php
 
-interface MyInterface
+namespace My\Dummy\Namespace;
+
+interface MyInterface extends \My\Dummy\Interface
 {
     public const CONST_A = 2;
     public const CONST_B = 3;
