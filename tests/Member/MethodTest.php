@@ -161,7 +161,7 @@ final class MethodTest extends TestCase
 
     /**
      * @dataProvider scopeDataProvider
-     * 
+     *
      * @param string $scope
      */
     public function testScope(string $scope): void
