@@ -6,13 +6,11 @@ use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
 use Leaditin\Code\Generator\Factory;
 use Leaditin\Code\Generator\TraitGenerator;
-use Leaditin\Code\Member\Constant;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Member\Property;
 use Leaditin\Code\Tag;
 use Leaditin\Code\Type;
 use Leaditin\Code\Value;
-use Leaditin\Code\Visibility;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -70,27 +68,6 @@ trait MyTrait extends \My\Dummy\Trait
 }
 
 EOL;
-        $this->assertSame($expected, $this->generator->generate());
-    }
-
-    public function testGenerateWithConstants(): void
-    {
-        $this->generator
-            ->setName('MyTrait')
-            ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
-            ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)));
-
-        $expected = <<<EOL
-<?php
-
-trait MyTrait
-{
-    public const CONST_A = 2;
-    public const CONST_B = 3;
-}
-
-EOL;
-
         $this->assertSame($expected, $this->generator->generate());
     }
 
@@ -160,8 +137,6 @@ EOL;
     {
         $this->generator
             ->setName('MyTrait')
-            ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
-            ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addProperty(new Property('name', new Value('Jon'), new Type(Type::TYPE_STRING), new Flag(Flag::FLAG_PROTECTED)))
             ->addProperty(new Property('email', new Value('jon@show'), new Type(Type::TYPE_STRING), new Flag(Flag::FLAG_PROTECTED)))
             ->addMethod(new Method('name', new Flag(Flag::FLAG_PROTECTED), null, 'return $this->name;', null, new Type(Type::TYPE_STRING)))
@@ -172,9 +147,6 @@ EOL;
 
 trait MyTrait
 {
-    public const CONST_A = 2;
-    public const CONST_B = 3;
-
     /**
      * @var string
      */

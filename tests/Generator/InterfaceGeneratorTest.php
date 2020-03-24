@@ -96,8 +96,8 @@ EOL;
     {
         $this->generator
             ->setName('MyInterface')
-            ->addMethod(new Method('name', new Flag(Flag::FLAG_PROTECTED), null, null, null, new Type(Type::TYPE_STRING)))
-            ->addMethod(new Method('email', new Flag(Flag::FLAG_PROTECTED), null, null, null, new Type(Type::TYPE_STRING, true)));
+            ->addMethod(new Method('name', new Flag(Flag::FLAG_PUBLIC), null, null, null, new Type(Type::TYPE_STRING)))
+            ->addMethod(new Method('email', new Flag(Flag::FLAG_PUBLIC), null, null, null, new Type(Type::TYPE_STRING, true)));
 
         $expected = <<<EOL
 <?php
@@ -107,12 +107,12 @@ interface MyInterface
     /**
      * @return string
      */
-    protected function name(): string;
+    public function name(): string;
 
     /**
      * @return null|string
      */
-    protected function email(): ?string;
+    public function email(): ?string;
 }
 
 EOL;
@@ -128,8 +128,8 @@ EOL;
             ->setExtends('My\Dummy\Interface')
             ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
-            ->addMethod(new Method('name', new Flag(Flag::FLAG_PROTECTED), null, null, null, new Type(Type::TYPE_STRING)))
-            ->addMethod(new Method('email', new Flag(Flag::FLAG_PROTECTED), null, null, null, new Type(Type::TYPE_STRING)));
+            ->addMethod(new Method('name', new Flag(Flag::FLAG_PUBLIC), null, null, null, new Type(Type::TYPE_STRING)))
+            ->addMethod(new Method('email', new Flag(Flag::FLAG_PUBLIC), null, null, null, new Type(Type::TYPE_STRING)));
 
         $expected = <<<EOL
 <?php
@@ -144,12 +144,12 @@ interface MyInterface extends \My\Dummy\Interface
     /**
      * @return string
      */
-    protected function name(): string;
+    public function name(): string;
 
     /**
      * @return string
      */
-    protected function email(): string;
+    public function email(): string;
 }
 
 EOL;
