@@ -112,7 +112,16 @@ EOL;
                 new Argument('name', new Type(Type::TYPE_STRING), new Value()),
                 new Argument('email', new Type(Type::TYPE_STRING), new Value()),
             ],
-            'return "@author $name <@email>";',
+            <<<EOL
+\$author = 'Jon Snow';
+\$email = 'jon@snow';
+
+return [
+    'author' => \$author,
+    'email' => \$email, 
+];
+EOL
+            ,
             new DocBlock(
                 'Some description',
                 null,
@@ -135,7 +144,13 @@ EOL;
      */
     public function doSomething(string \$name, string \$email): string
     {
-        return "@author \$name <@email>";
+        \$author = 'Jon Snow';
+        \$email = 'jon@snow';
+
+        return [
+            'author' => \$author,
+            'email' => \$email, 
+        ];
     }
 EOL;
 

@@ -156,6 +156,45 @@ EOL;
         $this->assertSame($expected, $this->generator->generate());
     }
 
+    public function testGenerateWithConstantsAndMethods(): void
+    {
+        $this->generator
+            ->setName('MyClass')
+            ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
+            ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
+            ->addMethod(new Method('name', new Flag(Flag::FLAG_PROTECTED), null, 'return \'Jon\';', null, new Type(Type::TYPE_STRING)))
+            ->addMethod(new Method('email', new Flag(Flag::FLAG_PROTECTED), null, 'return \'jon@show\';', null, new Type(Type::TYPE_STRING)));
+
+        $expected = <<<EOL
+<?php
+
+class MyClass
+{
+    public const CONST_A = 2;
+    public const CONST_B = 3;
+
+    /**
+     * @return string
+     */
+    protected function name(): string
+    {
+        return 'Jon';
+    }
+
+    /**
+     * @return string
+     */
+    protected function email(): string
+    {
+        return 'jon@show';
+    }
+}
+
+EOL;
+
+        $this->assertSame($expected, $this->generator->generate());
+    }
+
     public function testGenerate(): void
     {
         $this->generator

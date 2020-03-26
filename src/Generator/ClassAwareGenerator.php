@@ -272,7 +272,7 @@ abstract class ClassAwareGenerator extends Generator
     {
         $output = '';
 
-        if ($this->constants !== [] && ($this->properties !== [] || $this->methods !== [])) {
+        if ($this->constants !== [] && $this->properties !== []) {
             $output .= $this->generateLine('', 0);
         }
 
@@ -281,7 +281,7 @@ abstract class ClassAwareGenerator extends Generator
             $lines[] = $this->generateLine($this->propertyGenerator->generate($property));
         }
 
-        $output .= implode($this->endOfLine, $lines);
+        $output .= implode(static::END_OF_LINE, $lines);
 
         return $output;
     }
@@ -302,7 +302,7 @@ abstract class ClassAwareGenerator extends Generator
             $lines[] = $this->generateLine($this->methodGenerator->generate($method));
         }
 
-        $output .= implode($this->endOfLine, $lines);
+        $output .= implode(static::END_OF_LINE, $lines);
 
         return $output;
     }

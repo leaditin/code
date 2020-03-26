@@ -49,7 +49,7 @@ class DocBlockGenerator extends Generator
         $output .= implode($this->textToComment(''), $lines);
         $output .= $this->generateLine(' */');
 
-        return rtrim($output, $this->endOfLine);
+        return rtrim($output, static::END_OF_LINE);
     }
 
     /**
@@ -60,10 +60,10 @@ class DocBlockGenerator extends Generator
      */
     protected function textToComment(string $text, bool $wrap = false): string
     {
-        $text = $wrap ? wordwrap($text, 80, $this->endOfLine) : $text;
+        $text = $wrap ? wordwrap($text, 80, static::END_OF_LINE) : $text;
 
         $comment = '';
-        $lines = explode($this->endOfLine, $text);
+        $lines = explode(static::END_OF_LINE, $text);
 
         foreach ($lines as $line) {
             $comment .= $this->generateLine(rtrim(' * ' . $line));

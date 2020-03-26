@@ -55,7 +55,7 @@ class ConstantGenerator extends MemberGenerator
                     $this->valueGenerator->generate($constant->value() instanceof Value ? $constant->value() : $constant)
                 )
             ),
-            $this->endOfLine
+            static::END_OF_LINE
         );
     }
 }

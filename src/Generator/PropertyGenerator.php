@@ -71,6 +71,6 @@ class PropertyGenerator extends MemberGenerator
 
         $output .= $this->generateLine($line);
 
-        return rtrim($output, $this->endOfLine);
+        return rtrim($output, static::END_OF_LINE);
     }
 }

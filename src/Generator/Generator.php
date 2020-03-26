@@ -12,12 +12,12 @@ abstract class Generator
     /**
      * @var string
      */
-    protected $indentation = '    ';
+    public const INDENTATION = '    ';
 
     /**
      * @var string
      */
-    protected $endOfLine = PHP_EOL;
+    public const END_OF_LINE = PHP_EOL;
 
     /**
      * @var int
@@ -45,8 +45,8 @@ abstract class Generator
      */
     protected function generateLine(string $text, int $numberOfIndentationBefore = null, int $numberOfEmptyLinesAfter = 0): string
     {
-        return str_repeat($this->indentation, $numberOfIndentationBefore ?? $this->depth)
+        return str_repeat(static::INDENTATION, $numberOfIndentationBefore ?? $this->depth)
             . $text
-            . str_repeat($this->endOfLine, ++$numberOfEmptyLinesAfter);
+            . str_repeat(static::END_OF_LINE, ++$numberOfEmptyLinesAfter);
     }
 }

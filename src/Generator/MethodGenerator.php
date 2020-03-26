@@ -75,26 +75,22 @@ class MethodGenerator extends MemberGenerator
         if ($method->isAbstract() || $method->scope() === Method::SCOPE_INTERFACE) {
             $output .= $this->generateLine($line . ';');
 
-            return rtrim($output, $this->endOfLine);
+            return rtrim($output, static::END_OF_LINE);
         }
 
         $output .= $this->generateLine($line);
         $output .= $this->generateLine('{');
 
         if ($method->body() !== null) {
-            $output .= $this->generateLine(
-                preg_replace(
-                    '#^((?![a-zA-Z0-9_-]+;).+?)$#m',
-                    '$1',
-                    trim($method->body())
-                ),
-                2
-            );
+            foreach (explode(PHP_EOL, trim($method->body())) as $line) {
+                $line = preg_replace('#^((?![a-zA-Z0-9_-]+;).+?)$#m', '$1', $line);
+                $output .= $this->generateLine($line, $line === '' ? 0 : 2);
+            }
         }
 
         $output .= $this->generateLine('}');
 
-        return rtrim($output, $this->endOfLine);
+        return rtrim($output, static::END_OF_LINE);
     }
 
     /**
