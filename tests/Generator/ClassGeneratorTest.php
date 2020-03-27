@@ -322,6 +322,5 @@ class MyClass extends MyDummyAlias
 
 EOL;
         $this->assertSame($expected, $this->generator->generate());
-
     }
 }
