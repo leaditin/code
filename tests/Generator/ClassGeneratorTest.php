@@ -6,6 +6,7 @@ use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
 use Leaditin\Code\Generator\ClassGenerator;
 use Leaditin\Code\Generator\Factory;
+use Leaditin\Code\Import;
 use Leaditin\Code\Member\Constant;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Member\Property;
@@ -41,8 +42,8 @@ final class ClassGeneratorTest extends TestCase
     {
         $this->generator
             ->setName('MyClass')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Class')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('MyDummyClass')
             ->setDocBlock(
                 new DocBlock(
                     'Short description',
@@ -56,7 +57,7 @@ final class ClassGeneratorTest extends TestCase
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
 /**
  * Short description
@@ -65,7 +66,7 @@ namespace My\Dummy\Namespace;
  *
  * @property int \$someInteger
  */
-class MyClass extends \My\Dummy\Class
+class MyClass extends MyDummyClass
 {
 }
 
@@ -199,10 +200,10 @@ EOL;
     {
         $this->generator
             ->setName('MyClass')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Class')
-            ->implementInterface('My\Dummy\Interface')
-            ->useTrait('My\Dummy\Trait')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('\MyDummyClass')
+            ->implementInterface('\MyDummyInterface')
+            ->useTrait('\MyDummyTrait')
             ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addProperty(new Property('name', new Value('Jon'), new Type(Type::TYPE_STRING), new Flag(Flag::FLAG_PROTECTED)))
@@ -213,11 +214,11 @@ EOL;
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
-class MyClass extends \My\Dummy\Class implements \My\Dummy\Interface
+class MyClass extends \MyDummyClass implements \MyDummyInterface
 {
-    use \My\Dummy\Trait;
+    use \MyDummyTrait;
 
     public const CONST_A = 2;
     public const CONST_B = 3;
@@ -257,16 +258,16 @@ EOL;
     {
         $this->generator
             ->setName('MyClass')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Class')
+            ->setNamespace('MyNamespace')
+            ->setExtends('MyNamespace\MyParentClass')
             ->setFinal(true);
 
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyNamespace;
 
-final class MyClass extends \My\Dummy\Class
+final class MyClass extends MyNamespace\MyParentClass
 {
 }
 
@@ -278,17 +279,17 @@ EOL;
     {
         $this->generator
             ->setName('MyClass')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Class')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('\MyDummyClass')
             ->setAbstract(true)
             ->addMethod(new Method('email', new Flag(Flag::FLAG_ABSTRACT), null, null, null, new Type(Type::TYPE_STRING)));
 
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
-abstract class MyClass extends \My\Dummy\Class
+abstract class MyClass extends \MyDummyClass
 {
     /**
      * @return string
@@ -298,5 +299,29 @@ abstract class MyClass extends \My\Dummy\Class
 
 EOL;
         $this->assertSame($expected, $this->generator->generate());
+    }
+
+    public function testWithImports(): void
+    {
+        $this->generator
+            ->setName('MyClass')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('MyDummyAlias')
+            ->addImport(new Import('MyDummyClass', 'MyDummyAlias'));
+
+        $expected = <<<EOL
+<?php
+
+namespace MyDummyNamespace;
+
+use MyDummyClass as MyDummyAlias;
+
+class MyClass extends MyDummyAlias
+{
+}
+
+EOL;
+        $this->assertSame($expected, $this->generator->generate());
+
     }
 }

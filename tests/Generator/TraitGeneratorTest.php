@@ -39,8 +39,8 @@ final class TraitGeneratorTest extends TestCase
     {
         $this->generator
             ->setName('MyTrait')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Trait')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('\MyDummyTrait')
             ->setDocBlock(
                 new DocBlock(
                     'Short description',
@@ -54,7 +54,7 @@ final class TraitGeneratorTest extends TestCase
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
 /**
  * Short description
@@ -63,7 +63,7 @@ namespace My\Dummy\Namespace;
  *
  * @property int \$someInteger
  */
-trait MyTrait extends \My\Dummy\Trait
+trait MyTrait extends \MyDummyTrait
 {
 }
 

@@ -32,10 +32,11 @@ class ClassGenerator extends ClassAwareGenerator
     public function __construct(
         ConstantGenerator $constantGenerator,
         DocBlockGenerator $docBlockGenerator,
+        ImportGenerator $importGenerator,
         MethodGenerator $methodGenerator,
         PropertyGenerator $propertyGenerator
     ) {
-        parent::__construct($constantGenerator, $docBlockGenerator, $methodGenerator, $propertyGenerator);
+        parent::__construct($constantGenerator, $docBlockGenerator, $importGenerator, $methodGenerator, $propertyGenerator);
 
         $this->flag = new Flag();
     }
@@ -71,7 +72,7 @@ class ClassGenerator extends ClassAwareGenerator
      */
     public function implementInterface(string $fullyQualifiedInterfaceName): self
     {
-        $fullyQualifiedInterfaceName = '\\' . ltrim($fullyQualifiedInterfaceName, '\\');
+        $fullyQualifiedInterfaceName = trim($fullyQualifiedInterfaceName);
 
         $this->interfaces[$fullyQualifiedInterfaceName] = $fullyQualifiedInterfaceName;
 
@@ -85,7 +86,7 @@ class ClassGenerator extends ClassAwareGenerator
      */
     public function useTrait(string $fullyQualifiedTraitName): self
     {
-        $fullyQualifiedTraitName = '\\' . ltrim($fullyQualifiedTraitName, '\\');
+        $fullyQualifiedTraitName = trim($fullyQualifiedTraitName);
 
         $this->traits[$fullyQualifiedTraitName] = $fullyQualifiedTraitName;
 
@@ -105,9 +106,7 @@ class ClassGenerator extends ClassAwareGenerator
      */
     protected function generateScope(): string
     {
-        return $this->generateLine(
-            "{$this->generateFlags()} $this->name{$this->generateInheritance()}{$this->generateImplements()}"
-        ) . $this->generateLine('{') . $this->generateUses();
+        return $this->generateLine("{$this->generateFlags()} $this->name{$this->generateInheritance()}{$this->generateImplements()}") . $this->generateLine('{') . $this->generateUses();
     }
 
     /**

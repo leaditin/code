@@ -26,6 +26,7 @@ composer require leaditin/code
 use Leaditin\Code\DocBlock;
 use Leaditin\Code\Flag;
 use Leaditin\Code\Generator\Factory;
+use Leaditin\Code\Import;
 use Leaditin\Code\Member\Constant;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Member\Property;
@@ -37,10 +38,10 @@ use Leaditin\Code\Visibility;
 $generator = (new Factory())->classGenerator();
 $generator
     ->setName('MyClass')
-    ->setNamespace('My\Dummy\Namespace')
-    ->setExtends('My\Dummy\Class')
-    ->implementInterface('My\Dummy\Interface')
-    ->useTrait('My\Dummy\Trait')
+    ->setNamespace('MyDummyNamespace')
+    ->setExtends('MyDummyClass')
+    ->implementInterface('MyDummyInterface')
+    ->useTrait('MyDummyTrait')
     ->setDocBlock(
         new DocBlock(
             'Short description',
@@ -50,6 +51,7 @@ $generator
             ]
         )
     )
+    ->addImport(new Import('MyNamespace\\MyDummyTrait'))
     ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
     ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
     ->addProperty(new Property('name', new Value('Some User'), new Type(Type::TYPE_STRING), new Flag(Flag::FLAG_PROTECTED)))
@@ -65,7 +67,9 @@ Will output:
 ```php
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
+
+use MyNamespace\MyDummyTrait;
 
 /**
  * Short description
@@ -74,9 +78,9 @@ namespace My\Dummy\Namespace;
  *
  * @author author@domain
  */
-class MyClass extends \My\Dummy\Class implements \My\Dummy\Interface
+class MyClass extends MyDummyClass implements MyDummyInterface
 {
-    use \My\Dummy\Trait;
+    use MyDummyTrait;
 
     public const CONST_A = 2;
     public const CONST_B = 3;
@@ -125,8 +129,8 @@ use Leaditin\Code\Visibility;
 $generator = (new Factory())->interfaceGenerator();
 $generator
     ->setName('MyInterface')
-    ->setNamespace('My\Dummy\Namespace')
-    ->setExtends('My\Dummy\Interface')
+    ->setNamespace('MyDummyNamespace')
+    ->setExtends('MyDummyInterface')
     ->setDocBlock(
         new DocBlock(
             'Short description',
@@ -147,14 +151,14 @@ Will output...
 ```php
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
 /**
  * Short description
  *
  * Long description
  */
-interface MyInterface extends \My\Dummy\Interface
+interface MyInterface extends MyDummyInterface
 {
     public const CONST_A = 2;
     public const CONST_B = 3;

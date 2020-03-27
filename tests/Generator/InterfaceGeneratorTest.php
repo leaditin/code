@@ -39,8 +39,8 @@ final class InterfaceGeneratorTest extends TestCase
     {
         $this->generator
             ->setName('MyInterface')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Interface')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('\MyDummyInterface')
             ->setDocBlock(
                 new DocBlock(
                     'Short description',
@@ -54,7 +54,7 @@ final class InterfaceGeneratorTest extends TestCase
         $expected = <<<EOL
 <?php
 
-namespace My\\Dummy\\Namespace;
+namespace MyDummyNamespace;
 
 /**
  * Short description
@@ -63,7 +63,7 @@ namespace My\\Dummy\\Namespace;
  *
  * @author Code Generator
  */
-interface MyInterface extends \My\Dummy\Interface
+interface MyInterface extends \MyDummyInterface
 {
 }
 
@@ -124,8 +124,8 @@ EOL;
     {
         $this->generator
             ->setName('MyInterface')
-            ->setNamespace('My\Dummy\Namespace')
-            ->setExtends('My\Dummy\Interface')
+            ->setNamespace('MyDummyNamespace')
+            ->setExtends('\MyDummyInterface')
             ->addConstant(new Constant('CONST_A', 2, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addConstant(new Constant('CONST_B', 3, new Visibility(Visibility::VISIBILITY_PUBLIC)))
             ->addMethod(new Method('name', new Flag(Flag::FLAG_PUBLIC), null, null, null, new Type(Type::TYPE_STRING)))
@@ -134,9 +134,9 @@ EOL;
         $expected = <<<EOL
 <?php
 
-namespace My\Dummy\Namespace;
+namespace MyDummyNamespace;
 
-interface MyInterface extends \My\Dummy\Interface
+interface MyInterface extends \MyDummyInterface
 {
     public const CONST_A = 2;
     public const CONST_B = 3;

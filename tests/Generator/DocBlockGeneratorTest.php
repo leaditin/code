@@ -80,6 +80,10 @@ EOL
  * $shortDescription
  */
 EOL
+            ],
+            [
+                'docBlock' => new DocBlock(),
+                'expected' => '',
             ]
         ];
     }

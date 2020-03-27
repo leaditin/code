@@ -32,6 +32,6 @@ class TypeGenerator extends Generator
             return $nullable . $type->type();
         }
 
-        return $nullable . '\\' . ltrim($type->type(), '\\');
+        return $nullable . trim($type->type());
     }
 }

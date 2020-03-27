@@ -96,7 +96,7 @@ final class TypeGeneratorTest extends TestCase
             ],
             [
                 'type' => new Type(self::class, false),
-                'expected' => '\\' . self::class
+                'expected' => self::class
             ],
         ];
     }

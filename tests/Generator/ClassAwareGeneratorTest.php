@@ -6,8 +6,10 @@ use Leaditin\Code\DocBlock;
 use Leaditin\Code\Generator\ConstantGenerator;
 use Leaditin\Code\Generator\ClassAwareGenerator;
 use Leaditin\Code\Generator\DocBlockGenerator;
+use Leaditin\Code\Generator\ImportGenerator;
 use Leaditin\Code\Generator\MethodGenerator;
 use Leaditin\Code\Generator\PropertyGenerator;
+use Leaditin\Code\Import;
 use Leaditin\Code\Member\Constant;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Member\Property;
@@ -35,6 +37,7 @@ final class ClassAwareGeneratorTest extends TestCase
             [
                 $this->createMock(ConstantGenerator::class),
                 $this->createMock(DocBlockGenerator::class),
+                $this->createMock(ImportGenerator::class),
                 $this->createMock(MethodGenerator::class),
                 $this->createMock(PropertyGenerator::class),
             ]
@@ -93,6 +96,14 @@ final class ClassAwareGeneratorTest extends TestCase
     {
         $generator = clone $this->generator;
         $generator->addMethod($this->createMock(Method::class));
+
+        $this->assertNotEquals($this->generator, $generator);
+    }
+
+    public function testAddImport(): void
+    {
+        $generator = clone $this->generator;
+        $generator->addImport($this->createMock(Import::class));
 
         $this->assertNotEquals($this->generator, $generator);
     }

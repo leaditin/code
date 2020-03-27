@@ -65,7 +65,7 @@ EOL
                 'argument' => new Property('class', new Value(), new Type($type = Type::class), new Flag(Flag::FLAG_STATIC)),
                 'expected' => <<<EOL
     /**
-     * @var \\$type
+     * @var $type
      */
     public static \$class;
 EOL

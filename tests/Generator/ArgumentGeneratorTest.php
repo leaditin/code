@@ -54,7 +54,7 @@ final class ArgumentGeneratorTest extends TestCase
             ],
             [
                 'argument' => new Argument('class', new Type(Type::class), new Value(), true, false),
-                'expected' => '\\' . Type::class . ' $class'
+                'expected' => Type::class . ' $class'
             ],
         ];
     }

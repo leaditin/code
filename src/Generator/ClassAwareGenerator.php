@@ -3,6 +3,7 @@
 namespace Leaditin\Code\Generator;
 
 use Leaditin\Code\DocBlock;
+use Leaditin\Code\Import;
 use Leaditin\Code\Member\Constant;
 use Leaditin\Code\Member\Method;
 use Leaditin\Code\Member\Property;
@@ -23,6 +24,11 @@ abstract class ClassAwareGenerator extends Generator
      * @var DocBlockGenerator
      */
     protected $docBlockGenerator;
+
+    /**
+     * @var ImportGenerator
+     */
+    protected $importGenerator;
 
     /**
      * @var MethodGenerator
@@ -70,19 +76,27 @@ abstract class ClassAwareGenerator extends Generator
     protected $methods = [];
 
     /**
+     * @var Import[]
+     */
+    protected $imports = [];
+
+    /**
      * @param ConstantGenerator $constantGenerator
      * @param DocBlockGenerator $docBlockGenerator
+     * @param ImportGenerator $importGenerator
      * @param MethodGenerator $methodGenerator
      * @param PropertyGenerator $propertyGenerator
      */
     public function __construct(
         ConstantGenerator $constantGenerator,
         DocBlockGenerator $docBlockGenerator,
+        ImportGenerator $importGenerator,
         MethodGenerator $methodGenerator,
         PropertyGenerator $propertyGenerator
     ) {
         $this->constantGenerator = $constantGenerator;
         $this->docBlockGenerator = $docBlockGenerator;
+        $this->importGenerator = $importGenerator;
         $this->methodGenerator = $methodGenerator;
         $this->propertyGenerator = $propertyGenerator;
     }
@@ -172,6 +186,13 @@ abstract class ClassAwareGenerator extends Generator
         return $this;
     }
 
+    public function addImport(Import $import): self
+    {
+        $this->imports[$import->fullyQualifiedClassName()] = $import;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -201,6 +222,7 @@ abstract class ClassAwareGenerator extends Generator
     {
         $output = $this->generateLine('<?php', null, 1);
         $output .= $this->generateNamespace();
+        $output .= $this->generateImport();
         $output .= $this->generateDocBlock();
         $output .= $this->generateScope();
 
@@ -216,7 +238,27 @@ abstract class ClassAwareGenerator extends Generator
             return '';
         }
 
-        return $this->generateLine('namespace ' . ltrim($this->namespace, '\\') . ';', null, 1);
+        return $this->generateLine('namespace ' . trim($this->namespace) . ';', null, 1);
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateImport(): string
+    {
+        if (count($this->imports) === 0) {
+            return '';
+        }
+
+        $output = '';
+
+        foreach ($this->imports as $import) {
+            $output .= $this->generateLine($this->importGenerator->generate($import));
+        }
+
+        $output .= $this->generateLine('');
+
+        return $output;
     }
 
     /**
@@ -240,7 +282,7 @@ abstract class ClassAwareGenerator extends Generator
             return '';
         }
 
-        return ' extends \\' . ltrim($this->extends, '\\');
+        return ' extends ' . trim($this->extends);
     }
 
     /**

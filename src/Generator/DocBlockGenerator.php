@@ -46,6 +46,10 @@ class DocBlockGenerator extends Generator
             $lines[] = $this->textToComment($this->tagGenerator->generate($tag));
         }
 
+        if (count($lines) === 0) {
+            return '';
+        }
+
         $output .= implode($this->textToComment(''), $lines);
         $output .= $this->generateLine(' */');
 
