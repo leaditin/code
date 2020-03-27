@@ -133,7 +133,7 @@ class MethodGenerator extends MemberGenerator
      */
     protected function generateTagFromArgument(Argument $argument, string $docBlock): ?Tag
     {
-        $pattern = '/@property.+\$' . $argument->name() . '/';
+        $pattern = '/@param.+\$' . $argument->name() . '/';
 
         if (preg_match($pattern, $docBlock)) {
             return null;
@@ -142,6 +142,6 @@ class MethodGenerator extends MemberGenerator
         $value = preg_replace('/\?(\w+)/', 'null|$1', $this->typeGenerator->generate($argument->type()));
         $value .= ' $' . $argument->name();
 
-        return new Tag('property', $value);
+        return new Tag('param', $value);
     }
 }

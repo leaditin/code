@@ -49,7 +49,7 @@ final class MethodGeneratorTest extends TestCase
                 'Some example',
                 null,
                 [
-                    new Tag('property', 'string $name Defines name')
+                    new Tag('param', 'string $name Defines name')
                 ]
             ),
             new Type(Type::TYPE_STRING)
@@ -59,9 +59,9 @@ final class MethodGeneratorTest extends TestCase
     /**
      * Some example
      *
-     * @property string \$name Defines name
+     * @param string \$name Defines name
      *
-     * @property null|string \$email
+     * @param null|string \$email
      *
      * @return string
      */
@@ -134,9 +134,9 @@ EOL
     /**
      * Some description
      *
-     * @property string \$name
+     * @param string \$name
      *
-     * @property string \$email
+     * @param string \$email
      *
      * @throws InvalidArgumentException
      *
