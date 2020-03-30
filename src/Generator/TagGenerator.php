@@ -18,6 +18,10 @@ class TagGenerator extends Generator
      */
     public function generate(Tag $tag): string
     {
+        if ($tag->name() === '') {
+            return '';
+        }
+
         return trim("@{$tag->name()} {$tag->value()} {$tag->description()}");
     }
 }

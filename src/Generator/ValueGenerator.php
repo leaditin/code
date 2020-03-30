@@ -55,7 +55,7 @@ class ValueGenerator extends Generator
             return $value ? 'true' : 'false';
         }
 
-        if (is_numeric($value)) {
+        if (is_numeric($value) || preg_match('/[^:]+::[^:]+/', $value)) {
             return (string)$value;
         }
 

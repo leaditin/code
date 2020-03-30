@@ -32,25 +32,33 @@ class DocBlockGenerator extends Generator
     public function generate(DocBlock $docBlock): string
     {
         $lines = [];
-        $output = $this->generateLine('/**');
 
         if ($docBlock->shortDescription() !== null) {
-            $lines[] = $this->textToComment($docBlock->shortDescription());
+            $lines[-2][] = $this->textToComment($docBlock->shortDescription());
         }
 
         if ($docBlock->longDescription() !== null) {
-            $lines[] = $this->textToComment($docBlock->longDescription());
+            $lines[-1][] = $this->textToComment($docBlock->longDescription());
         }
 
-        foreach ($this->sortTags($docBlock) as $tag) {
-            $lines[] = $this->textToComment($this->tagGenerator->generate($tag));
+        foreach ($this->sortTags($docBlock) as $i => $tags) {
+            foreach ($tags as $tag) {
+                $lines[$i][] = $this->textToComment($this->tagGenerator->generate($tag));
+            }
         }
 
         if (count($lines) === 0) {
             return '';
         }
 
-        $output .= implode($this->textToComment(''), $lines);
+        $output = $this->generateLine('/**');
+
+        foreach ($lines as $group) {
+            $output .= implode('', $group);
+            $output .= $this->textToComment('');
+        }
+
+        $output = rtrim($output, $this->textToComment('')) . static::END_OF_LINE;
         $output .= $this->generateLine(' */');
 
         return rtrim($output, static::END_OF_LINE);
@@ -87,7 +95,7 @@ class DocBlockGenerator extends Generator
         $map = [
             'return' => 3,
             'throws' => 2,
-            'property' => 1,
+            'param' => 1,
         ];
 
         foreach ($docBlock->tags() as $tag) {
@@ -101,6 +109,6 @@ class DocBlockGenerator extends Generator
             return [];
         }
 
-        return array_merge(...$array);
+        return $array;
     }
 }

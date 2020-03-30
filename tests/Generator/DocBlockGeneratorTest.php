@@ -84,7 +84,27 @@ EOL
             [
                 'docBlock' => new DocBlock(),
                 'expected' => '',
-            ]
+            ],
+            [
+                'docBlock' => new DocBlock(
+                    $shortDescription = $this->anything()->toString(),
+                    null,
+                    [
+                        new Tag('property', '$someProperty'),
+                        new Tag('', ''),
+                        new Tag('method', 'someMethod()'),
+                    ]
+                ),
+                'expected' => <<<EOL
+/**
+ * $shortDescription
+ *
+ * @property \$someProperty
+ *
+ * @method someMethod()
+ */
+EOL
+            ],
         ];
     }
 

@@ -70,6 +70,10 @@ final class ValueGeneratorTest extends TestCase
                 'value' => new Value(new self()),
                 'expected' => self::class
             ],
+            [
+                'value' => new Value('self::class'),
+                'expected' => 'self::class'
+            ],
         ];
     }
 

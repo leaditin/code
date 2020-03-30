@@ -42,6 +42,10 @@ class TagGeneratorTest extends TestCase
                 'tag' => new Tag('property', 'string $someProperty', 'Explains some property'),
                 'expected' => '@property string $someProperty Explains some property'
             ],
+            [
+                'tag' => new Tag('', ''),
+                'expected' => '',
+            ]
         ];
     }
 

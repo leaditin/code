@@ -60,7 +60,6 @@ final class MethodGeneratorTest extends TestCase
      * Some example
      *
      * @param string \$name Defines name
-     *
      * @param null|string \$email
      *
      * @return string
@@ -135,7 +134,6 @@ EOL
      * Some description
      *
      * @param string \$name
-     *
      * @param string \$email
      *
      * @throws InvalidArgumentException
