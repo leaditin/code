@@ -6,8 +6,8 @@ $rules = [
     'object_operator_without_whitespace' => true,
     'no_whitespace_in_blank_line' => true,
     'standardize_not_equals' => true,
-    'no_extra_consecutive_blank_lines' => ['extra'],
- ];
+    'no_extra_blank_lines' => ['tokens' => ['extra']],
+];
 
 $finder = \Symfony\Component\Finder\Finder::create()
     ->files()
@@ -18,6 +18,6 @@ $finder = \Symfony\Component\Finder\Finder::create()
     ->exclude('vendor')
     ->notPath('autoload_classmap.php');
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules($rules)
     ->setFinder($finder);
